@@ -742,9 +742,20 @@ function initSmoothGallery() {
 
   if (!gallery || !track) return;
 
-  // Sur mobile, home toujours en mode liste : pas de choix, pas de slider
-  // (le bouton List/Slide et son cercle sont masqués en CSS).
-  if (window.matchMedia("(max-width: 768px)").matches) isVerticalGlobal = true;
+  // Mobile : liste simple, en flux normal, avec le scroll natif du
+  // navigateur (parfait au doigt, aucune simulation JS nécessaire). La
+  // suite de cette fonction (clones "infinis" + molette + boucle de rendu)
+  // ne s'applique qu'au slider desktop, qui est en position: fixed — sur
+  // mobile ça bloquait tout scroll tactile ET sortait le footer du flux
+  // normal du document (un élément fixed ne prend aucune place dans la page,
+  // donc le footer, qui le suit dans le HTML, remontait juste sous le header).
+  if (window.matchMedia("(max-width: 768px)").matches) {
+    isVerticalGlobal = true;
+    gallery.classList.add('is-vertical');
+    track.querySelectorAll('.is-clone').forEach(clone => clone.remove());
+    updateChangeLayoutBtnLabel();
+    return;
+  }
 
   if (isVerticalGlobal) gallery.classList.add('is-vertical');
   else gallery.classList.remove('is-vertical');
@@ -1122,7 +1133,7 @@ function initSmoothGallery() {
   }
 
   galleryWheelHandler = (e) => {
-    if (isGalleryAnimating) return; 
+    if (isGalleryAnimating) return;
     if (gallery.contains(e.target)) e.preventDefault();
     target += e.deltaY + e.deltaX;
   };

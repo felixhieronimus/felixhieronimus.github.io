@@ -1908,6 +1908,22 @@ video {
     width: calc(100% - 20px) !important;
   }
 
+  /* La galerie est en position: fixed par défaut (nécessaire pour le slider
+     desktop) : sur mobile elle bloquait le scroll tactile et sortait le
+     footer du flux du document (un élément fixed ne pousse pas ses voisins).
+     En liste mobile on repasse en flux normal, scroll natif du navigateur. */
+  .custom-gallery.is-vertical {
+    position: static !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .custom-gallery.is-vertical .gallery-track {
+    /* Le header reste fixed par-dessus : juste assez de marge pour ne pas
+       passer dessous (les 15vh du desktop supposaient l'ancien fixed). */
+    padding-top: 70px;
+  }
+
   /* Modale "à propos" : les 3 colonnes passent en flex column, empilées,
      avec un scroll interne si le contenu dépasse la hauteur d'écran. Les
      carrés-cibles (.about-bullet-target) restent en DOM au même endroit
