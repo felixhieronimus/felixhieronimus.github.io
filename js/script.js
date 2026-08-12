@@ -1469,10 +1469,23 @@ function initPullToNextProject(container = document) {
   document.body.appendChild(glassOverlay);
 
   // --- 2. SÉLECTION DU PROJET ---
-  const allProjects = ["projetexemple.html", "arizonalove.html"];
+  const allProjects = [
+    "arizonalove.html",
+    "ilebleue.html",
+    "elma.html",
+    "rt20.html",
+    "joie.html",
+    "paul.html",
+    "sophie.html",
+  ];
   const projectNames = {
-    "projetexemple.html": "Exemple",
-    "arizonalove.html":  "Arizona Love",
+    "arizonalove.html": "Arizona Love",
+    "ilebleue.html":    "L'île Bleue",
+    "elma.html":         "Elma",
+    "rt20.html":         "RT20",
+    "joie.html":         "Bureau Joie",
+    "paul.html":         "Paul Peinture",
+    "sophie.html":       "Sophie Delaporte",
   };
   const scrollTarget = 2000;
 
