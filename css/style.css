@@ -1,3 +1,6 @@
+/* ==========================================================================
+   RESET GLOBAL
+   ========================================================================== */
 * {
   font-family: "Ridley Grotesk";
   font-weight: normal;
@@ -5,8 +8,7 @@
   text-transform: uppercase;
 }
 
-
-
+/* ---toggle grille/liste (bouton "List" du header + son point)--- */
 .circlegrid {
     width: 10px;
     height: 10px;
@@ -82,15 +84,10 @@
     transition: opacity 0.3s ease-in-out;
 }
 
-/* --- AJUSTEMENT MINI-NAV --- */
-/* --- CONFIGURATION DE LA ZONE DE NAVIGATION (10vw) --- */
-
 /* ==========================================================================
-   1. STRUCTURE DE LA GALERIE (HORIZONTALE PAR DÉFAUT)
+   MINI-NAV — home (mode liste) et pages projet (scrubber d'images)
    ========================================================================== */
-   /* --- CONFIGURATION DE LA ZONE DE NAVIGATION (10vw) --- */
-
-   .mini-nav-container {
+.mini-nav-container {
   position: fixed;
   right: 0px!important;
   top: 50%;
@@ -269,10 +266,6 @@
 }
 
 /* ==========================================================================
-   3. MINI NAVIGATION (MINI-MAP)
-   ========================================================================== */
-
-/* ==========================================================================
    MODALE "À PROPOS" — mise en page du contenu (la chorégraphie d'ouverture/
    fermeture — carrés qui volent vers .about-bullet-target, fondus — reste
    pilotée en JS dans initAboutMagic(), elle lit les positions en direct via
@@ -421,16 +414,13 @@
   transition: opacity 0.5s ease;
 }
 
-
-
-
-
-
+/* ==========================================================================
+   DIVERS — sélection de texte, fondus, ancienne grille "newgrid" (legacy)
+   ========================================================================== */
 ::selection {
   color: var(--beige);
   background-color: var(--pink);
 }
-
 
 /* Effet de fondu */
 .fade-out {
@@ -528,6 +518,7 @@ height: max-content;
   opacity: 0;
 }
 
+/* ---variables couleurs--- */
 :root {
   --beige: #ffffff;
   --pink: #ff477e;
@@ -567,6 +558,9 @@ height: max-content;
 }
 
 
+/* ==========================================================================
+   BODY & HEADER (DESKTOP)
+   ========================================================================== */
 body {
   background-color: var(--beige);
   overflow-x: hidden!important;
@@ -698,6 +692,10 @@ header .menu span {
   text-transform: uppercase;
   opacity: 0;
 }
+
+/* ==========================================================================
+   ANIMATIONS DIVERSES & GALERIE PROJET (miniatures, fondus, sliders legacy)
+   ========================================================================== */
 #progressIndicator {
   position: fixed!important;
   bottom: 20px;
@@ -874,23 +872,6 @@ bottom: 0;
   object-fit: cover;
 }
 
-/* .hp-projet {
-  background-size: cover;
-  background-position: center;
-  position: absolute;
-  left: 46px;
-  top: 94px;
-  width: 94.5%;
-  height: 85vh;
-  translate: none;
-  rotate: none;
-  scale: none;
-  transform: translate(0px, 0px);
-  z-index: -1;
-  opacity: 0;
-  animation: opacity 1s ease-in 1s forwards;
-} */
-
 .hp-projet {
     background-size: cover;
     background-position: center;
@@ -939,6 +920,9 @@ bottom: 0;
   display: none;
 }
 
+/* ==========================================================================
+   NAV — texte au survol (rolling-text), i18n, compteur/indicateur de progrès
+   ========================================================================== */
 .hidden {
   display: none;
 }
@@ -1013,6 +997,11 @@ bottom: 0;
   transition: 0.2s ease-in-out;
 }
 
+/* ==========================================================================
+   ANCIEN PANNEAU "À PROPOS" (#hidden-div) — remplacé par la modale JS
+   d'initAboutMagic(), ces règles ne sont plus rattachées à aucun élément
+   du HTML actuel mais restent ici au cas où une page y ferait encore appel.
+   ========================================================================== */
 .hidden-div {
   position: fixed;
   top: 0;
@@ -1133,10 +1122,6 @@ bottom: 0;
   }
 }
 
-/* .opacityhome {
-  opacity: 0;
-  animation: opacity 2s ease 3.5s forwards;
-} */
 .opacityhome {
   opacity: 0;
 }
@@ -1152,6 +1137,7 @@ bottom: 0;
   }
 }
 
+/* ---preloader (écran de chargement "chaos to order")--- */
 #preloader-percentage {
   font-size: clamp(30px, 5vw, 60px);
   color: var(--pink);
@@ -1162,6 +1148,9 @@ bottom: 0;
   z-index: 10000000000000;
 }
 
+/* ==========================================================================
+   ANCIENNE MODALE "À PROPOS" — animations (legacy, voir .hidden-div plus haut)
+   ========================================================================== */
 .content-about p,
 .content-about h2,
 .content-about h3,
@@ -1224,6 +1213,10 @@ bottom: 0;
   position: relative;
   height: max-content;
 }
+
+/* ==========================================================================
+   SLIDERS SWIPER (legacy) & PAGE CONTACT (legacy, page supprimée)
+   ========================================================================== */
 .slider-duo {
   display: flex;
   width: 65%;
@@ -1331,6 +1324,7 @@ bottom: 0;
   cursor: pointer;
 }
 
+/* ---effet curseur (legacy)--- */
 #imageContainer {
   position: relative;
   display: inline-block;
@@ -1347,6 +1341,9 @@ bottom: 0;
   display: none;
 }
 
+/* ==========================================================================
+   PAGES PROJET — en-tête, crédits, description, footer, largeurs d'images
+   ========================================================================== */
 .project-header-spacer{
   height: 50vh;
 }
@@ -1551,6 +1548,10 @@ footer .legal p {
   color: rgba(0, 0, 0, 0.5);
 }
 
+/* ==========================================================================
+   ANCIEN "PROJET SUIVANT" (#section-cachee) — legacy, superseded par
+   #next-project-trigger (voir tout en haut du fichier)
+   ========================================================================== */
 #section-cachee {
   position: fixed;
   bottom: -100vh;
@@ -1689,6 +1690,7 @@ video {
   );
 }
 
+/* ---vignettes home (survol + dégradé au clic vers un projet)--- */
 .relative-home {
   position: relative;
   z-index: 100;
@@ -1729,10 +1731,12 @@ video {
   flex-direction: column;
 }
 
+/* ---footer home (masqué par défaut, réaffiché sur mobile, voir media query)--- */
 .footer-home {
   display: none;
 }
 
+/* ---galerie/lightbox (legacy)--- */
 #gallery-container {
   position: fixed;
   top: 50%;
@@ -1799,9 +1803,9 @@ video {
   cursor: pointer;
 }
 
+/* ---bouton flottant (lightbox legacy) & fondus d'image--- */
 .buttons-container {
   position: fixed;
-  bottom: 3vh;
   bottom: 5vh;
   opacity: 0;
   left: 50%;
@@ -1858,14 +1862,9 @@ video {
   }
 }
 
-
-
-
-
-
-
-
-
+/* ==========================================================================
+   MOBILE — jusqu'à 768px (menu burger, home en liste, pages projet, etc.)
+   ========================================================================== */
 @media only screen and (min-width: 30px) and (max-width: 768px) {
   .menu {
     display: none !important;
@@ -2146,6 +2145,7 @@ video {
     }
 }
 
+/* ---mobile avec souris/trackpad (rare : tablette + souris, etc.)--- */
 @media only screen and (min-width: 30px) and (max-width: 768px) and (hover: hover) and (pointer: fine) {
   .swiper-wrapper {
     display: flex;
