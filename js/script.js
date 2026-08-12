@@ -568,14 +568,15 @@ function initProjectMiniNav(container = document) {
     sectionHeight = lastImg ? (lastImg.offsetTop + lastImg.offsetHeight) - firstImgTop : 0;
 
     const winH = window.innerHeight;
-    const trackHeight = miniTrack.offsetHeight;
     containerHeight = miniNav.clientHeight || winH * 0.8;
 
-    // Borné entre 30px et la hauteur totale du track : sans plafond, un projet
-    // avec peu d'images (donc une sectionHeight faible face au winH) pouvait
-    // donner un highlighter de plusieurs centaines de pixels, bien plus grand
-    // que le track lui-même.
-    const highlighterHeight = Math.min(Math.max((winH / sectionHeight) * trackHeight, 30), trackHeight) || 30;
+    // Le highlighter doit mettre en avant UNE seule vignette à la fois : on
+    // prend sa hauteur réelle (toutes uniformes grâce au ratio 16/9 fixé en
+    // CSS) plutôt qu'un calcul proportionnel au ratio viewport/scroll, qui
+    // pouvait déborder sur 2-3 vignettes selon le nombre d'images du projet
+    // (et selon si sectionHeight avait fini de se stabiliser après le
+    // chargement des images lazy).
+    const highlighterHeight = allMinis[0]?.offsetHeight || 30;
     highlighter.style.height = `${highlighterHeight}px`;
     highlighter.style.width = "calc(5vw + 30px)";
   };
