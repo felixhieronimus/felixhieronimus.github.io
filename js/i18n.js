@@ -51,26 +51,47 @@
     "project.expertise": { fr: "Expertises",          en: "Expertise" },
     "project.next":      { fr: "Projet suivant",      en: "Next project" },
 
-    // --- Descriptions de projet ---
-    "desc.lorem": {
-      fr: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore",
-      en: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore"
+    // --- Descriptions de projet (une clé dédiée par projet : le texte FR
+    //     de chaque page est désormais différent, donc plus question de
+    //     partager "desc.lorem" comme avant) ---
+    "desc.arizonalove": {
+      fr: "Le projet consistait à refondre intégralement son univers digital et son site marchand. L'enjeu principal était d'imaginer une expérience e-commerce solaire, intuitive et sensorielle, capable d'incarner fidèlement l'esprit libre, audacieux et désirable de l'enseigne.",
+      en: "The project involved a complete overhaul of the brand's digital universe and online store. The main challenge was to design a sun-drenched, intuitive and sensory e-commerce experience, capable of faithfully embodying the free-spirited, bold and desirable spirit of the brand."
+    },
+    "desc.elma": {
+      fr: "Réalisé dans le cadre d'un projet d'école de fin d'études pour le collectif de designers Hall Haus, ce travail visait à démocratiser le design d'auteur auprès des jeunes actifs nomades. L'objectif était de concevoir le système de mobilier modulaire ELMA ainsi que l'intégralité de son univers visuel, afin de désacraliser l'objet et de proposer une alternative éco conçue à la fast furniture.",
+      en: "Created as a final-year school project for the design collective Hall Haus, this work aimed to make designer furniture more accessible to young, nomadic professionals. The goal was to design the ELMA modular furniture system along with its entire visual identity, demystifying the object and offering an eco-conscious alternative to fast furniture."
+    },
+    "desc.ilebleue": {
+      fr: "Enseigne bordelaise d'objets et de textiles artisanaux, nous a contactés pour moderniser son image vieillissante. L'enjeu principal était de repenser l'ensemble de sa communication visuelle et de la décliner de manière harmonieuse sur tous ses supports, du print au e-commerce.",
+      en: "A Bordeaux-based brand of handcrafted objects and textiles reached out to us to modernise its ageing image. The main challenge was to rethink its entire visual communication and apply it harmoniously across all its media, from print to e-commerce."
     },
     "desc.joie": {
-      fr: "Bureau Joie, une nouvelle agence de communication, spécialisée dans la création de marques, d'emballages, de campagnes de communication, et bien plus encore. J'ai travaillé en étroite collaboration avec l'équipe de l'agence pour comprendre leurs univers et proposer un site web reflétant leurs dynamismes et leurs créativités",
-      en: "Bureau Joie is a new communication agency specializing in brand creation, packaging design, communication campaigns, and much more. I worked closely with the agency's team to understand their world and design a website reflecting their dynamism and creativity."
+      fr: "Joie, bureau de création, spécialisée dans la création de marques, d'emballages, de campagnes de communication, et bien plus encore. J'ai travaillé en étroite collaboration avec l'équipe de l'agence pour la réalisation d'un site web reflétant leurs dynamismes et leurs créativités.",
+      en: "Joie is a creative studio specialising in brand creation, packaging design, communication campaigns and much more. I worked closely with the agency's team to design a website reflecting their dynamism and creativity."
+    },
+    "desc.paul": {
+      fr: "La mission était de créer le nouveau site web de Paul Peinture, qui souhaitait un site vivant correspondant pleinement à son état d'esprit et à ses valeurs. Le résultat est un site web coloré et dynamique, qui présente de manière claire et attrayante ses différents services.",
+      en: "The mission was to create Paul Peinture's new website, as they wanted a lively site that fully matched their spirit and values. The result is a colourful, dynamic website that presents their range of services in a clear and appealing way."
+    },
+    "desc.rt20": {
+      fr: "Dans le cadre d'un projet, nous avons pour mission d'analyser et de recréer l'identité visuelle fictive d'un objet de design, tout en tenant compte de son contexte historique, artistique et graphique. Ce travail inclut une étude approfondie du visuel, du style, des créateurs, ainsi que des choix typographiques et colorimétriques.",
+      en: "As part of a project, the brief was to analyse and recreate the fictional visual identity of a design object, taking into account its historical, artistic and graphic context. This work includes an in-depth study of the visuals, style and creators involved, as well as the typographic and colour choices."
+    },
+    "desc.sophie": {
+      fr: "En collaboration avec Bureau Joie, nous avons identifié les besoins de Sophie pour développer un site web à la hauteur de ses attentes. Le résultat est un site épuré et accessible, conçu pour valoriser ses photographies et offrir une expérience utilisateur optimale.",
+      en: "In collaboration with Bureau Joie, we identified Sophie's needs to develop a website that lived up to her expectations. The result is a clean, accessible site designed to showcase her photography and offer an optimal user experience."
     },
 
-    // --- Expertises par projet ---
-    "expertise.webdesign":       { fr: "Webdesign / UI UX",                    en: "Web design / UI UX" },
-    "expertise.ilebleue":        { fr: "DA / print / Webdesign / UI UX",       en: "Art direction / print / Web design / UI UX" },
-    "expertise.joie":            { fr: "Web development / Webdesign",         en: "Web development / Web design" },
-    "expertise.lorem":           { fr: "Lorem / Ipsum",                        en: "Lorem / Ipsum" },
-    "expertise.identite":        { fr: "Identité / Packaging / UI/UX",         en: "Branding / Packaging / UI/UX" },
-    "expertise.objet3d":         { fr: "Objet / DA / Print / 3D",              en: "Product / Art direction / Print / 3D" },
-    "expertise.rt20":            { fr: "DA / UI / Identité",                   en: "Art direction / UI / Branding" },
-    "expertise.paul":            { fr: "Webdesign / UI UX",                    en: "Web design / UI UX" },
-    "expertise.sophie":          { fr: "Webdesign / UI UX",                    en: "Web design / UI UX" },
+    // --- Expertises par projet (format harmonisé : Titre Case, séparateur
+    //     " / ", "UI/UX" toujours en un seul bloc) ---
+    "expertise.webdesign":       { fr: "Webdesign / UI/UX",                          en: "Web design / UI/UX" },
+    "expertise.ilebleue":        { fr: "Webdesign / UI/UX / Packaging / DA",         en: "Web design / UI/UX / Packaging / Art direction" },
+    "expertise.objet3d":         { fr: "Identité / DA Print & Web / Objet",          en: "Branding / Art direction Print & Web / Product" },
+    "expertise.rt20":            { fr: "DA / Identité / RS / Webdesign",             en: "Art direction / Branding / Social media / Web design" },
+    "expertise.joie":            { fr: "Web development / Webdesign / UI/UX",        en: "Web development / Web design / UI/UX" },
+    "expertise.paul":            { fr: "Web development / Webdesign / UI/UX",        en: "Web development / Web design / UI/UX" },
+    "expertise.sophie":          { fr: "Web development / Webdesign / UI/UX",        en: "Web development / Web design / UI/UX" },
 
     // --- Modale "à propos" (générée en JS) ---
     "about.bio.label":      { fr: "Bio",              en: "Bio" },
