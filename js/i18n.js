@@ -24,7 +24,6 @@
     "nav.about":         { fr: "à propos",           en: "About" },
     "nav.about.close":   { fr: "Fermer",              en: "Close" },
     "nav.contact":       { fr: "Contact",             en: "Contact" },
-    "nav.lab":           { fr: "Lab",                 en: "Lab" },
     "nav.menu":          { fr: "Menu",                en: "Menu" },
     "gallery.slide":     { fr: "Slide",               en: "Slide" },
     "gallery.list":      { fr: "Liste",               en: "List" },
@@ -38,7 +37,7 @@
     "footer.form":       { fr: "Formulaire",          en: "Contact form" },
     "footer.legal":      { fr: "mentions légales",   en: "legal notice" },
     "footer.privacy":    { fr: "Confidentialité",    en: "Privacy" },
-    "footer.jury":       { fr: "Awwwards young jury 2021-2024", en: "Awwwards Young Jury 2021–2024" },
+    "footer.jury":       { fr: "Awwwards young jury 2021-2026", en: "Awwwards Young Jury 2021–2026" },
     "footer.honors":     { fr: "5 honors",            en: "5 honors" },
     "footer.mobileexc":  { fr: "2 mobile EXCELLENCE", en: "2 mobile Excellence" },
 
