@@ -512,14 +512,15 @@ function initProjectMiniNav(container = document) {
   
   const allMinis = [];
 
+  // Miniatures = petits fichiers "-mini.webp" dédiés (300px), jamais l'image/
+  // vidéo plein format : la charger juste pour l'afficher en 6vw téléchargeait
+  // et décodait des méga-octets pour chaque vignette, d'où le freeze au
+  // moment où le scrubber apparaissait (toutes décodées d'un coup).
   images.forEach((media, index) => {
     const mini = document.createElement('div');
     mini.classList.add('mini-item');
-    if (media.tagName.toLowerCase() === 'img') {
-      mini.innerHTML = `<img src="${media.src}" loading="lazy">`;
-    } else {
-      mini.innerHTML = `<video src="${media.src}#t=0.1" muted playsinline preload="metadata"></video>`;
-    }
+    const miniSrc = media.src.replace(/\.[^./]+$/, '-mini.webp');
+    mini.innerHTML = `<img src="${miniSrc}" loading="lazy">`;
 
     mini.addEventListener('click', () => {
       if (lenis) {
@@ -826,8 +827,12 @@ function initSmoothGallery() {
       items.forEach((item, index) => {
         const mini = document.createElement('div');
         mini.classList.add('mini-item', setType !== 'original' ? 'is-clone' : 'real');
+        // Même correctif que le scrubber projet : une vraie petite vignette
+        // dédiée plutôt que l'image plein format (répétée x3 pour la boucle
+        // infinie du mini-nav, donc x3 le coût de décodage inutile).
         const imgSrc = item.querySelector('.initial-image')?.src || "";
-        mini.innerHTML = `<img src="${imgSrc}">`;
+        const miniSrc = imgSrc ? imgSrc.replace(/\.[^./]+$/, '-mini.webp') : "";
+        mini.innerHTML = `<img src="${miniSrc}" loading="lazy">`;
         
         // 🛡️ FIX 2 : On injecte la courbe de Bézier "Expo.inOut" pour l'opacité
         mini.style.transition = "opacity 0.6s cubic-bezier(0.87, 0, 0.13, 1)";
