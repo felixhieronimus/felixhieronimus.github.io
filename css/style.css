@@ -169,9 +169,14 @@
 }
 
 /* --- STYLE DES VIGNETTES (5vw) --- */
+/* Ratio fixe : certaines images de galerie sont des captures très hautes
+   (ex. screenshot d'une page qui scroll) et en "height: auto" ça donnait une
+   vignette démesurée dans le track (jusqu'à 400px+ de haut) qui cassait tout
+   l'espacement. object-fit: cover recadre proprement quel que soit le ratio
+   source. */
 .project-mini-nav .mini-item {
     width: 6vw; /* La moitié des 10vw disponibles */
-    aspect-ratio: auto; /* Laisse l'image garder son ratio ou fixe-le si besoin */
+    aspect-ratio: 16 / 9;
     cursor: pointer;
     pointer-events: auto;
     opacity: 0.2;
@@ -181,7 +186,7 @@
 .project-mini-nav .mini-item img,
 .project-mini-nav .mini-item video {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
     object-fit: cover;
 }

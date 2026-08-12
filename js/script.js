@@ -567,7 +567,11 @@ function initProjectMiniNav(container = document) {
     const trackHeight = miniTrack.offsetHeight;
     containerHeight = miniNav.clientHeight || winH * 0.8;
 
-    const highlighterHeight = Math.max((winH / sectionHeight) * trackHeight, 30) || 30;
+    // Borné entre 30px et la hauteur totale du track : sans plafond, un projet
+    // avec peu d'images (donc une sectionHeight faible face au winH) pouvait
+    // donner un highlighter de plusieurs centaines de pixels, bien plus grand
+    // que le track lui-même.
+    const highlighterHeight = Math.min(Math.max((winH / sectionHeight) * trackHeight, 30), trackHeight) || 30;
     highlighter.style.height = `${highlighterHeight}px`;
     highlighter.style.width = "calc(5vw + 30px)";
   };
