@@ -1787,8 +1787,12 @@ function transitionWithBackgroundImage(imgToAnimate, callback) {
   imgToAnimate.style.opacity = "0";
 
   const isMobile    = window.innerWidth < 768;
+  // Doit correspondre exactement aux valeurs CSS de .imgClonedResize (voir
+  // style.css, règle de base et son override mobile) : sinon le tween GSAP
+  // s'arrête à une position différente de celle où la classe CSS "snap"
+  // ensuite, ce qui recrée un petit saut résiduel à la fin de l'animation.
   const targetConfig = isMobile
-    ? { width: "100vw", height: "50vh", top: "0px", left: "0px", right: "0px" }
+    ? { width: "calc(100% - 20px)", height: "32vh", top: "100px", left: "10px", right: "10px" }
     : { width: "100vw", height: "50vh", top: "0px", left: "0px", right: "0px", opacity: 1 };
 
   // A. Animation du cadre
@@ -1799,21 +1803,20 @@ function transitionWithBackgroundImage(imgToAnimate, callback) {
     duration: 1.5,
     ease: "expo.inOut",
     onComplete: () => {
-      if (isMobile) {
-        cloneWrapper.style.position = "absolute";
-        setTimeout(() => { cloneWrapper.classList.add("imgClonedResize"); callback(); }, 10);
-      } else {
-        gsap.to(cloneWrapper, {
-          ...targetConfig, x: 0, y: 0, scale: 1, zIndex: -2, duration: 1.5, ease: "expo.inOut",
-          onComplete: () => {
-            setTimeout(() => {
-              cloneWrapper.style.position = "absolute";
-              cloneWrapper.classList.add("imgClonedResize");
-              callback();
-            }, 100);
-          },
-        });
-      }
+      // Sur les deux, un second tween anime réellement vers la taille/position
+      // finale (bannière plein écran) — sans lui, .imgClonedResize (qui n'a
+      // pas de transition CSS) applique ses valeurs instantanément : d'où le
+      // "saut" observé sur mobile, qui sautait cette étape auparavant.
+      gsap.to(cloneWrapper, {
+        ...targetConfig, x: 0, y: 0, scale: 1, zIndex: -2, duration: 1.2, ease: "expo.inOut",
+        onComplete: () => {
+          setTimeout(() => {
+            cloneWrapper.style.position = "absolute";
+            cloneWrapper.classList.add("imgClonedResize");
+            callback();
+          }, 100);
+        },
+      });
     },
   });
 
