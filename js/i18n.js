@@ -68,6 +68,7 @@
     "expertise.lorem":           { fr: "Lorem / Ipsum",                        en: "Lorem / Ipsum" },
     "expertise.identite":        { fr: "Identité / Packaging / UI/UX",         en: "Branding / Packaging / UI/UX" },
     "expertise.objet3d":         { fr: "Objet / DA / Print / 3D",              en: "Product / Art direction / Print / 3D" },
+    "expertise.rt20":            { fr: "DA / UI / Identité",                   en: "Art direction / UI / Branding" },
 
     // --- Modale "à propos" (générée en JS) ---
     "about.bio.label":      { fr: "Bio",              en: "Bio" },
