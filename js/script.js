@@ -1589,13 +1589,18 @@ function initMenu() {
   const mobileAboutBtn = mobileMenu.querySelector(".about-btn-mobile");
   let menuOpen = false;
 
-  const CLOSED_SIZE = 10; // même taille que .circlegrid
+  const CLOSED_SIZE    = 10; // même taille que .circlegrid
+  const CORNER_GROWTH  = 6;  // px gagnés vers le haut/droite à l'ouverture, pour que
+                              // le carré noir déborde du carré blanc de fermeture au
+                              // lieu de s'arrêter pile à son coin (meilleure lisibilité)
   const customEase  = "expo.inOut";
 
-  gsap.set(mobileMenu, { width: CLOSED_SIZE, height: CLOSED_SIZE });
+  gsap.set(mobileMenu, { top: CLOSED_SIZE, right: CLOSED_SIZE, width: CLOSED_SIZE, height: CLOSED_SIZE });
 
   const tl = gsap.timeline({ paused: true })
     .to(mobileMenu, {
+      top:    CLOSED_SIZE - CORNER_GROWTH,
+      right:  CLOSED_SIZE - CORNER_GROWTH,
       width:  () => Math.min(window.innerWidth * 0.82, 380),
       height: () => Math.min(window.innerHeight * 0.62, 460),
       duration: 0.9,
