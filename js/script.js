@@ -1474,22 +1474,22 @@ function initPullToNextProject(container = document) {
 
   // --- 2. SÉLECTION DU PROJET ---
   const allProjects = [
-    "arizonalove.html",
-    "ilebleue.html",
-    "elma.html",
-    "rt20.html",
-    "joie.html",
-    "paul.html",
-    "sophie.html",
+    "arizonalove",
+    "ilebleue",
+    "elma",
+    "rt20",
+    "joie",
+    "paul",
+    "sophie",
   ];
   const projectNames = {
-    "arizonalove.html": "Arizona Love",
-    "ilebleue.html":    "L'île Bleue",
-    "elma.html":         "Elma",
-    "rt20.html":         "RT20",
-    "joie.html":         "Bureau Joie",
-    "paul.html":         "Paul Peinture",
-    "sophie.html":       "Sophie Delaporte",
+    "arizonalove": "Arizona Love",
+    "ilebleue":    "L'île Bleue",
+    "elma":         "Elma",
+    "rt20":         "RT20",
+    "joie":         "Bureau Joie",
+    "paul":         "Paul Peinture",
+    "sophie":       "Sophie Delaporte",
   };
   const scrollTarget = 2000;
 
@@ -1897,7 +1897,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const toggleNoOverlayClass = () => {
-    const pagesWithNoOverlay = ["/index.html", "/", "/ai.html", "/contact.html", "/merci.html"];
+    const pagesWithNoOverlay = ["/index.html", "/", "/ai.html", "/contact.html", "/merci.html", "/ai", "/contact", "/merci"];
     document.body.classList.toggle(
       "noOverlay",
       pagesWithNoOverlay.some(p => window.location.pathname.endsWith(p))
