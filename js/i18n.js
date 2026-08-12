@@ -149,6 +149,16 @@
       setRollingText(el, text);
     } else {
       el.textContent = text;
+      // .dynamicText (la longue description projet) est ré-emballée mot par
+      // mot en <span> par adjustTextOpacity() dans script.js, avec un flag
+      // dataset.initialized qui l'empêche de repasser dessus. Comme on vient
+      // d'écraser ces <span> avec du texte brut, il faut retirer le flag pour
+      // que le prochain appel à adjustTextOpacity() (déclenché juste après
+      // par switchLang) reconstruise l'effet sur le nouveau texte au lieu de
+      // laisser le paragraphe sans animation ni style.
+      if (el.classList.contains("dynamicText")) {
+        delete el.dataset.initialized;
+      }
     }
   }
 
@@ -199,6 +209,13 @@
     updateToggleButtons(next);
     // Éléments contrôlés dynamiquement par script.js (pas de simple data-i18n)
     if (typeof window.refreshGridButtonLabel === "function") window.refreshGridButtonLabel();
+    // translate({fade:true}) remplace le texte après FADE_MS (le temps du
+    // fondu) : on attend ce même délai avant de relancer adjustTextOpacity(),
+    // qui réemballe .dynamicText en mots <span> et réattache l'effet de
+    // révélation au scroll sur le texte fraîchement traduit.
+    if (typeof window.adjustTextOpacity === "function") {
+      setTimeout(() => window.adjustTextOpacity(), FADE_MS);
+    }
   }
 
   function init() {
