@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<!-- ============================================================
+     HEAD
+     ============================================================ -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bureau Joie, une nouvelle agence de communication, spécialisée dans la création de marques, d'emballages, de campagnes de communication, et bien plus encore. J'ai travaillé en étroite collaboration avec l'équipe de l'agence pour comprendre leurs univers et proposer un site web reflétant leurs dynamismes et leurs créativités">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Félix Hieronimus">
+    <title>Félix Hieronimus - Projet Exemple</title>
+    <link rel="icon" href="img/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="css/font.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<!-- ============================================================
+     BODY — wrapper Barba.js
+     ============================================================ -->
+<body data-barba="wrapper">
+
+    <!-- --------------------------------------------------------
+         HEADER
+         -------------------------------------------------------- -->
+  <header>
+    <div>
+            <a href="/index.html">Félix Hieronimus</a>
+        </div>
+        <div class="flexgrid">
+        <a href="#" id="changeLayoutBtn">List</a>
+        <div class="circlegrid"></div>
+        </div>
+
+        <div class="menu">
+            <a class="rolling-text" data-i18n="nav.projects" href="/index.html">Projets</a>
+
+            <a class="rolling-text about-btn" id="about-btn" data-i18n="nav.about" href="#">à propos</a>
+
+            <a class="rolling-text" data-i18n="nav.contact" href="mailto:felixhieronimus@gmail.com">Contact</a>
+
+            <a class="rolling-text" data-i18n-toggle-lang href="#">EN</a>
+        </div>
+
+</header>
+
+    <!-- --------------------------------------------------------
+         MENU MOBILE
+         -------------------------------------------------------- -->
+    <button id="menu-btn" class="menu-btn" type="button" aria-label="Menu" aria-expanded="false"></button>
+    <div id="mobile-menu" class="mobile-menu">
+        <nav class="mobile-menu-inner">
+            <a href="/index.html" data-i18n="nav.projects">Projets</a>
+            <a href="/ai.html" data-i18n="nav.lab">Lab</a>
+            <a href="#" class="about-btn-mobile" data-i18n="nav.about">à propos</a>
+            <a href="/contact.html" data-i18n="nav.contact">Contact</a>
+            <a href="#" data-i18n-toggle-lang>EN</a>
+        </nav>
+    </div>
+
+    <!-- ============================================================
+         MAIN — conteneur Barba.js
+         ============================================================ -->
+    <main data-barba="container" class="container main-content" data-barba-namespace="detailpage">
+
+        <!-- Image hero du projet (fond via inline style) -->
+        <div class="hp-projet" style="background-image: url('img/thumbnail/exemple-h.jpg');" id="imageProjet"></div>
+
+        <!-- Espaceur visuel sous le header -->
+        <section class="project-header-spacer"></section>
+
+        <!-- --------------------------------------------------------
+             EN-TÊTE DU PROJET
+             -------------------------------------------------------- -->
+        <section class="inner-project">
+            <div class="flex">
+                <h2 class="title-project noSlide">titre projet</h2>
+                <a class="web-link" target="_blank" data-i18n="project.viewsite" href="#">Voir le site</a>
+            </div>
+
+            <div class="description noSlide">
+                <p class="dynamicText noSlide" data-i18n="desc.lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+            </div>
+
+            <hr class="credit-hr">
+
+            <!-- Bloc crédits -->
+            <div class="flex-inner">
+                <h3 data-i18n="project.credits">crédits</h3>
+                <div class="credit">
+
+                    <div class="flex-inner">
+                        <p data-i18n="project.client">Client</p>
+                        <p>Lorem</p>
+                    </div>
+                    <hr>
+
+                    <div class="flex-inner">
+                        <p data-i18n="project.with">Avec</p>
+                        <p>Lorem</p>
+                    </div>
+                    <hr>
+
+                    <div class="flex-inner">
+                        <p data-i18n="project.date">Date</p>
+                        <p>2026</p>
+                    </div>
+                    <hr>
+
+                    <div class="flex-inner">
+                        <p data-i18n="project.expertise">Expertises</p>
+                        <p data-i18n="expertise.lorem">Lorem / Ipsum</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+        <!-- --------------------------------------------------------
+             GALERIE DU PROJET — images pleine largeur
+             -------------------------------------------------------- -->
+        <section class="sectionprojet">
+            <img src="img/exempleprojet/exemple-projet.jpg" alt="image de Bureau Joie" class="noParallax w-100">
+            <img src="img/exempleprojet/exemple-projet.jpg" alt="image de Bureau Joie" class="noParallax w-100">
+            <img src="img/exempleprojet/exemple-projet.jpg" alt="image de Bureau Joie" class="noParallax w-100">
+            <img src="img/exempleprojet/exemple-projet.jpg" alt="image de Bureau Joie" class="noParallax w-100">
+            <img src="img/exempleprojet/exemple-projet.jpg" alt="image de Bureau Joie" class="noParallax w-100">
+            <img src="img/exempleprojet/exemple-projet.jpg" alt="image de Bureau Joie" class="noParallax w-100">
+            <img src="img/exempleprojet/exemple-projet.jpg" alt="image de Bureau Joie" class="noParallax w-100">
+            <img src="img/exempleprojet/exemple-projet.jpg" alt="image de Bureau Joie" class="noParallax w-100">
+        </section>
+
+        <!-- --------------------------------------------------------
+             UI SCROLL — pourcentage de lecture de la page
+             -------------------------------------------------------- -->
+        <div class="scroll-percentage">
+            <span id="percent-value">0</span>%
+        </div>
+
+        <!-- Mini barre de navigation / progression -->
+        <div class="mini-nav-container project-mini-nav">
+            <div class="mini-nav-track"></div>
+        </div>
+
+        <!-- --------------------------------------------------------
+             PROJET SUIVANT — déclencheur de transition
+             -------------------------------------------------------- -->
+        <div id="next-project-trigger">
+            <div class="nextnom">
+                <p class="nextpro" data-i18n="project.next">Projet suivant</p>
+                <p class="next-project-name" id="next-project-name"></p>
+            </div>
+            <!-- Barre de progression pour le chargement du projet suivant -->
+            <div class="progress">
+                <div id="next-progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- --------------------------------------------------------
+             FOOTER
+             -------------------------------------------------------- -->
+        <footer>
+            <hr>
+
+            <section class="flex-footer">
+
+                <!-- Colonne Clients -->
+                <div>
+                    <h3 data-i18n="footer.clients">Clients</h3>
+                    <a target="_blank" href="http://bureaujoie.com">bureau joie</a>
+                    <a target="_blank" href="https://www.paulpeinture.fr">Paul Peinture</a>
+                    <a target="_blank" href="https://www.sophiedelaporte.com">Sophie Delaporte</a>
+                    <a target="_blank" href="https://www.orphie-maisondemeubles.com">Orphie</a>
+                    <a target="_blank" href="https://www.parisattitude.com/fr">Paris Attitude</a>
+                    <a target="_blank" href="https://one-shot-experience.com">Ose</a>
+                    <a target="_blank" href="https://bedandy.fr/">Be Dandy</a>
+                    <a target="_blank" href="https://gace.co">Gace</a>
+                    <a target="_blank" href="https://www.madamecconseille.com">Madame C Conseille</a>
+                </div>
+
+                <!-- Colonne Awwwards -->
+                <div>
+                    <h3 data-i18n="footer.awwwards">Awwwards</h3>
+                    <a target="_blank" href="https://www.awwwards.com/jury-member/felixhieronimus" data-i18n="footer.jury">Awwwards young jury 2021-2024</a>
+                    <a target="_blank" href="https://www.awwwards.com/felixhieronimus/" data-i18n="footer.honors">5 honors</a>
+                    <a target="_blank" href="https://www.awwwards.com/felixhieronimus/" data-i18n="footer.mobileexc">2 mobile EXCELLENCE</a>
+                </div>
+
+                <!-- Colonne Réseaux Sociaux -->
+                <div>
+                    <h3 data-i18n="footer.social">Réseaux Sociaux</h3>
+                    <a target="_blank" href="https://www.instagram.com/hieronimusfelix/">Instagram</a>
+                    <a target="_blank" href="https://www.linkedin.com/in/felix-hieronimus-567ba1164/">Linkedin</a>
+                    <a target="_blank" href="https://www.awwwards.com/felixhieronimus/">Awwwards</a>
+                </div>
+
+                <!-- Colonne Contact -->
+                <div>
+                    <h3 data-i18n="footer.contact">Contact</h3>
+                    <a href="/contact.html" data-i18n="footer.form">Formulaire</a>
+                    <!-- Horloge dynamique (JS) -->
+                    <div class="clock"></div>
+                </div>
+
+            </section>
+
+            <hr>
+
+            <!-- Mentions légales -->
+            <div class="flex-footer legal">
+                <p>2026 © Hieronimus Félix</p>
+                <div class="flex-footer w-33">
+                    <a href="#" data-i18n="footer.legal">mentions légales</a>
+                    <a href="#" data-i18n="footer.privacy">Confidentialité</a>
+                </div>
+            </div>
+
+        </footer>
+
+    </main>
+
+    </div>
+
+    <!-- ============================================================
+         SCRIPTS
+         ============================================================ -->
+
+    <!-- Transitions de pages -->
+    <script src="https://unpkg.com/@barba/core"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/script.js"></script>
+
+</body>
+</html>

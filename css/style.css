@@ -1,0 +1,2173 @@
+* {
+  font-family: "Ridley Grotesk";
+  font-weight: normal;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+
+
+.circlegrid {
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    margin: 1px;
+    transition: 0.9s ease-in-out;
+}
+
+.flexgrid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 60px;
+    transition: opacity 0.6s ease-in;
+}
+
+.activegrid{
+  background-color: black!important;
+  border: 1px solid white;
+}
+
+/* ==========================================================================
+   PULL TO NEXT PROJECT
+   ========================================================================== */
+#next-project-trigger {
+  height: 30vh; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background: var(--beige);
+  width: 100%;
+}
+.nextnom{
+  display: flex;
+}
+
+.flex{
+  display: flex;
+  justify-content: space-between;
+}
+
+.nextnom p{
+  margin: 3px;
+}
+.progress {
+  width: 40vw;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.3);
+
+}
+
+#next-progress-fill {
+  width: 100%;
+  height: 100%;
+  height: 2px;
+  background: black;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+/* --- COMPTEUR POURCENTAGE --- */
+.scroll-percentage {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 1000;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+    color: var(--black);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* --- AJUSTEMENT MINI-NAV --- */
+/* --- CONFIGURATION DE LA ZONE DE NAVIGATION (10vw) --- */
+
+/* ==========================================================================
+   1. STRUCTURE DE LA GALERIE (HORIZONTALE PAR DÉFAUT)
+   ========================================================================== */
+   /* --- CONFIGURATION DE LA ZONE DE NAVIGATION (10vw) --- */
+
+   .mini-nav-container {
+  position: fixed;
+  right: 0px!important;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 80vh;
+  width: 30vw!important; /* On occupe tout l'espace restant (100vw - 90vw) */
+  z-index: 1000;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+
+/* Affiche la mini-nav uniquement quand .is-vertical est actif */
+.custom-gallery.is-vertical ~ .mini-nav-container {
+  opacity: 1 !important;
+  transition: 0.6s 0.6s;
+  pointer-events: auto !important;
+}
+
+.mini-nav-track {
+  display: flex;
+  flex-direction: column;
+   align-items: center; /* Assure le centrage des enfants */
+  gap: 12px;
+  will-change: transform;
+}
+
+.mini-item {
+  width: 4vw; 
+
+  flex-shrink: 0;
+  opacity: 0.2;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.mini-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+.mini-item.is-active {
+  opacity: 1;
+}
+
+.project-mini-nav {
+    position: fixed!important;
+    right: 0!important; /* On colle le conteneur au bord droit de l'écran */
+    width: 30vw!important; /* On occupe tout l'espace restant (100vw - 90vw) */
+    top: 50%!important;
+    transform: translateY(-50%)!important;
+    height: auto!important;
+    max-height: 80vh!important;
+    display: flex!important;
+    flex-direction: column!important;
+    overflow: hidden!important; /* La piste défile en interne, pas besoin de déborder */
+    align-items: center!important; /* Centre horizontalement les items dans les 10vw */
+    /* justify-content reste en flex-start : le JS calcule lui-même le centrage
+       vertical de la vignette active via translateY sur .mini-nav-track, en
+       partant du principe que la piste démarre au sommet du conteneur. */
+    justify-content: flex-start!important;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out!important;
+}
+
+.project-mini-nav .mini-nav-track {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Assure le centrage des enfants */
+    gap: 15px; /* Espace vertical entre tes vignettes */
+    width: 100%;
+    will-change: transform;
+    transition: transform 0.5s cubic-bezier(0.85, 0, 0.15, 1);
+}
+
+/* --- STYLE DES VIGNETTES (5vw) --- */
+.project-mini-nav .mini-item {
+    width: 6vw; /* La moitié des 10vw disponibles */
+    aspect-ratio: auto; /* Laisse l'image garder son ratio ou fixe-le si besoin */
+    cursor: pointer;
+    pointer-events: auto;
+    opacity: 0.2;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.project-mini-nav .mini-item img,
+.project-mini-nav .mini-item video {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+.project-mini-nav .mini-item.is-active {
+    opacity: 1;
+    /* Optionnel : un léger zoom sur l'image active */
+    transform: scale(1.1); 
+}
+/* ==========================================================================
+   1. STRUCTURE DE LA GALERIE (HORIZONTALE PAR DÉFAUT)
+   ========================================================================== */
+.custom-gallery {
+  position: fixed; /* Le secret est ici : on détache la galerie du flux */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: flex-end; /* Aligne la piste exactement sur le vrai bottom: 0 */
+  overflow: hidden;
+  z-index: 1; /* Reste bien derrière ton header et tes menus */
+  
+}
+
+.gallery-track {
+  display: flex;
+  align-items: flex-end; /* Les items se calent sur le bas du track */
+  height: 100vh;
+  will-change: transform;
+}
+
+.gallery-track.is-switching {
+  pointer-events: none;
+}
+
+.gallery-item {
+  flex-shrink: 0;
+  width: 20vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Pousse l'image et le titre vers le bas */
+  transition: none !important;
+}
+
+.relative-home {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 0; /* Colle l'image au bord inférieur */
+}
+
+.initial-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.titre-projet {
+  margin-bottom: 20px; /* Espace entre le titre (au-dessus) et l'image */
+}
+
+/* ==========================================================================
+   2. MODE VERTICAL (GRID / COLUMN)
+   ========================================================================== */
+.custom-gallery.is-vertical {
+  align-items: flex-start; /* On repart du haut pour le scroll vertical */
+}
+
+.custom-gallery.is-vertical .gallery-track {
+  flex-direction: column;
+  align-items: center;
+  height: auto;
+  width: 100%;
+  padding-top: 15vh; /* Marge pour le menu en haut */
+}
+
+.custom-gallery.is-vertical .gallery-item {
+  width: 20vw;
+  margin-bottom: 8vh; /* Espace serré entre les projets en colonne */
+}
+
+/* ==========================================================================
+   3. MINI NAVIGATION (MINI-MAP)
+   ========================================================================== */
+
+/* ==========================================================================
+   MODALE "À PROPOS" — mise en page du contenu (la chorégraphie d'ouverture/
+   fermeture — carrés qui volent vers .about-bullet-target, fondus — reste
+   pilotée en JS dans initAboutMagic(), elle lit les positions en direct via
+   getBoundingClientRect() donc elle suit cette mise en page quelle qu'elle
+   soit, desktop comme mobile).
+   ========================================================================== */
+.about-content {
+  display: flex;
+  width: 90vw;
+  max-width: 1400px;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 60px;
+  color: #000;
+}
+
+.about-col-bio     { flex: 1; }
+.about-col-clients { flex: 2; }
+.about-col-links   { flex: 1; }
+
+.about-heading {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.about-heading-split {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  gap: 20px;
+}
+.about-heading-split .about-heading {
+  margin-bottom: 0;
+}
+
+.about-bullet-target {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  margin-right: 15px;
+}
+
+.about-label {
+  font-size: 11px;
+  opacity: 0.4;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.about-body {
+  opacity: 0;
+  font-size: clamp(14px, 1.1vw, 18px);
+  line-height: 1.5;
+  font-weight: 600;
+  margin: 0;
+  padding-left: 25px;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.about-clients-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.about-links-row {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.about-links-col {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+.about-links-col a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Bouton de fermeture — inutile sur desktop (le lien "Fermer" du header
+   reste visible et accessible pendant que la modale est ouverte), mais
+   indispensable sur mobile où .menu est masqué : voir le media query. */
+.about-close-btn {
+  display: none;
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  /* Aligné sur le même repère que le logo (padding header) et le carré du
+     menu (top: 10px), centré entre les deux. */
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  color: #000;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1.4;
+  cursor: pointer;
+  z-index: 2;
+}
+
+/* ==========================================================================
+   4. TEXTE AU SURVOL (HOVER TEXT)
+   ========================================================================== */
+
+#hoverTextContainer {
+  position: absolute;
+  top: 40%;
+  text-transform: uppercase;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  border-radius: 5px;
+  color: rgba(0, 0, 0, 0.3);
+  font-size: 12px;
+  text-align: center;
+  display: none;
+  line-height: 20px;
+}
+
+
+.custom-gallery.is-vertical ~ #hoverTextContainer {
+  left: 40px !important;
+  top: 90% !important;  
+  
+  /* On pivote vers le haut à partir du coin bas-gauche */
+  transform: rotate(-90deg) !important;
+  transform-origin: left bottom !important;
+ 
+}
+/* ==========================================================================
+   5. INTERFACE UI (CACHER CERCLE ET COMPTEUR)
+   ========================================================================== */
+.custom-gallery.is-vertical ~ .project-counter,
+.custom-gallery.is-vertical ~ .indicator-container {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.5s ease;
+}
+
+
+
+
+
+
+::selection {
+  color: var(--beige);
+  background-color: var(--pink);
+}
+
+
+/* Effet de fondu */
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+.sectionprojet{
+  margin: 10px;
+}
+.fade-in {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Le body avant et après l'overflow: hidden */
+body.no-scroll {
+  overflow: visible;  /* Supprime le scroll horizontal en modifiant l'overflow */
+}
+
+/* Styles pour la section .newgrid qui va apparaître après */
+.newgrid {
+  display: none;
+  max-height: 92vh; /* Ajustez cette hauteur pour que ça défile bien */
+  overflow-y: auto;  /* Scroll interne activé */
+  position: relative;
+}
+.newgrid {
+  overflow: scroll; /* Permet de scroller */
+  scrollbar-width: none; /* Pour les navigateurs Firefox */
+  margin: 40px;
+}
+
+.newgrid::-webkit-scrollbar {
+  display: none; /* Pour les navigateurs basés sur Webkit (Chrome, Safari) */
+}
+
+.newgrid .swiper-slide {
+  display: flex;
+  align-items: flex-start!important;
+  width: auto;
+}
+.end{
+  justify-content: flex-end;
+  margin-top: -35vh;
+}
+
+.end .thumbContainer{
+  order: 2;
+}
+.center{
+  justify-content: center;
+  margin-top: -5vh;
+}
+
+.start{
+  justify-content: start;
+  margin-top: 15vh;
+}
+
+#newtext{
+  margin:  0 50px;
+}
+
+#newtext p{
+  margin: 0;
+}
+.domaine{
+  margin: 20px 0 !important;
+  text-transform: uppercase;
+}
+.newgridtemplate{
+display: flex;
+height: max-content;
+
+
+}
+
+.newgridtemplate .titre-projet{
+  font-size: 30px;
+  height: auto;
+  margin: 20px 0;
+}
+
+/* Définir la transition de fondu pour le swiper et la grille */
+.fade-in, .fade-out {
+  transition: opacity 1s ease-in-out;  /* Assurer que l'opacité change en 1s */
+  opacity: 0;
+}
+
+.fade-in {
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+:root {
+  --beige: #ffffff;
+  --pink: #ff477e;
+  --black: #000;
+  --diffpink:#00b881;
+}
+
+.containerSlide a {
+  opacity: 1 !important;
+}
+
+.pinkhover {
+  position: relative;
+  overflow: hidden;
+}
+.pinkhover::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 100000;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, #ff477e 60%, transparent 10.5%) no-repeat;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s, background-position 0.2s;
+  background-position: var(--x, 0) var(--y, 0);
+}
+
+
+.pinkhover.hovering::after {
+  opacity: 1;
+  background: radial-gradient(circle, #ff477e 10%, transparent 10.5%) no-repeat;
+  background-position: var(--x) var(--y);
+  transition: background 0.2s, opacity 0.5s;
+}
+
+
+body {
+  background-color: var(--beige);
+  overflow-x: hidden!important;
+  margin: 0;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+a {
+  text-decoration: none;
+  color: unset;
+}
+
+header {
+    display: flex;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    padding: 10px;
+    box-sizing: border-box;
+    font-weight: 500 !important;
+    mix-blend-mode: difference;
+    justify-content: space-between;
+    top: 0;
+    z-index: 10000000000000000000000000000000000000000;
+    text-transform: uppercase;
+}
+
+
+
+header .menu {
+     align-items: baseline;
+  justify-content: space-between;
+  color: white;
+  display: flex;
+}
+
+header  a {
+ font-weight: 500!important;
+ color: white;
+}
+
+header .menu a {
+margin-left: 25px;
+color: white;
+ font-weight: 500!important;
+}
+
+header .menu span {
+   font-weight: 500!important;
+}
+/* ==========================================================================
+   MENU MOBILE — carré noir qui s'agrandit depuis le coin haut-droit
+   ========================================================================== */
+
+/* Panneau : carré noir au repos (même taille que .circlegrid, cf. plus haut),
+   grandit vers le bas-gauche à l'ouverture (piloté en JS/GSAP, top/right
+   restent fixes). Pas d'icône : juste le carré plein. */
+.mobile-menu {
+  display: none; /* activé uniquement dans le media query mobile */
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 10px;
+  height: 10px;
+  background: var(--black);
+  overflow: hidden;
+  z-index: 999999;
+}
+
+/* Bouton burger : élément indépendant (pas un enfant de .mobile-menu, qui le
+   découperait via son overflow:hidden) avec une zone cliquable bien plus
+   large que le petit carré visible — plus simple à toucher au doigt. Ancré
+   au même coin, sans contenu visible : seul le carré noir de .mobile-menu
+   se voit, en dessous. */
+.menu-btn {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 46px;
+  height: 46px;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  z-index: 1000000;
+}
+
+#scroll-progress {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  z-index: 9999;
+  display: none; /* Masquer par défaut */
+}
+
+/* Liens : ancrés en bas-gauche du panneau, même style typo que le desktop
+   (taille/poids/majuscules hérités de la règle globale "*"), blancs sur noir. */
+.mobile-menu-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 20px;
+  box-sizing: border-box;
+  gap: 10px;
+}
+
+.mobile-menu-inner a {
+  width: auto;
+  color: var(--beige);
+  font-weight: 500;
+  text-transform: uppercase;
+  opacity: 0;
+}
+#progressIndicator {
+  position: fixed!important;
+  bottom: 20px;
+  right: 20px;
+  background-color: #fff;
+  padding: 10px;
+  height: 10px;
+  z-index: 1000;
+  overflow: hidden;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.current-image {
+  display: inline-block;
+  vertical-align: top;
+}
+
+/* Appliquez l'animation uniquement au numéro de l'image courante */
+@keyframes slide-in {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes slide-out {
+  from { transform: translateY(0); }
+  to { transform: translateY(-100%); }
+}
+
+.image-number-animation {
+  animation: slide-in 0.4s ease forwards;
+}
+
+.outgoing {
+  animation: slide-out 0.4s ease forwards;
+}
+
+
+.pink {
+  color: var(--pink) !important;
+}
+.rolling-text .block:last-child {
+  color: var(--black);
+}
+.infinite-container{
+  position: fixed;
+width: 100vw;
+height: 100vh;
+bottom: 0;
+}
+.swiper-wrapper {
+  display: flex;
+  /* height: calc(100vh - 85px); */
+  height: 100vh;
+  align-items: flex-end;
+}
+
+.swiper-slide {
+  display: flex;
+  align-items: flex-end;
+  width: auto;
+}
+
+@keyframes slideUpAndFadeIn {
+  from {
+    transform: translateY(50vh);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.slideUpAndFadeIn {
+  animation: slideUpAndFadeIn 1s ease-in-out forwards;
+}
+
+.swiper-slide img {
+  max-width: 780px;
+  max-height: 655px;
+}
+
+.projectInfo {
+  margin: 14px 0 13px 0;
+  z-index: -1;
+  text-transform: uppercase;
+}
+
+.projectInfo h2 {
+  margin: 0;
+}
+
+.projectInfo h3 {
+  margin: 8px 8px 8px 0;
+}
+
+.projectInfo .category,
+.projectInfo .medium {
+  text-transform: none;
+  opacity: 0.4;
+}
+
+.projectInfo .medium {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 100px;
+  font-style: italic;
+  padding: 0px 7px 1px 7px;
+}
+
+.thumbContainer {
+  opacity: 1;
+}
+
+
+.fadeInSlideContainer {
+  overflow: hidden;
+}
+.fadeInSlide {
+  animation-name: fadeInSlide;
+  animation-duration: 2.5s;
+  animation-timing-function: cubic-bezier(1, 0.055, 0.32, 1);
+  animation-fill-mode: forwards;
+}
+
+.img-slider {
+  max-width: calc(380px);
+  max-height: calc(550px);
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+}
+
+@keyframes fadeInSlide {
+  0% {
+    transform: translateY(130%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.titre-projet {
+  font-size: 11px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.info-projet {
+  display: none;
+}
+
+.hoverText {
+  display: none;
+}
+
+
+
+.cloned-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+  z-index: 1000;
+}
+
+.expanded-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* .hp-projet {
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  left: 46px;
+  top: 94px;
+  width: 94.5%;
+  height: 85vh;
+  translate: none;
+  rotate: none;
+  scale: none;
+  transform: translate(0px, 0px);
+  z-index: -1;
+  opacity: 0;
+  animation: opacity 1s ease-in 1s forwards;
+} */
+
+.hp-projet {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50vh;
+    width: 100vw;
+    transform: translate(0px, 0px);
+    z-index: -1;
+    opacity: 1;
+
+}
+
+.imgClonedResize{
+  left: 0px!important;
+  right: 0px!important;
+  top: 0px!important;
+  width: 100vw!important; 
+  height: 50vh!important;
+}
+
+
+@keyframes opacity {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.initial-image {
+  z-index: -10;
+}
+
+.cloned {
+  min-height: 50vh !important;
+  height: auto !important;
+}
+
+.contact .cloned {
+  display: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.rolling-text {
+  display: inline-block;
+  height: 12px;
+  text-decoration: none;
+  overflow: hidden;
+  color: var(--black);
+}
+
+[data-i18n-toggle-lang] {
+  cursor: pointer;
+}
+
+[data-i18n] {
+  will-change: opacity;
+}
+
+.pink .cloned-text {
+  color: var(--black) !important;
+}
+.cloned-text {
+  color: white !important;
+
+}
+
+.letter {
+  display: inline-block;
+}
+
+
+.line {
+  transform: translateY(0)!important;
+  opacity: 0;
+  animation: slideUp 0.5s forwards ease-out;
+  animation-delay: calc(var(--line-index) * 0.1s);
+}
+
+@keyframes slideUp {
+  to {
+    opacity: 1;
+  }
+}
+
+.project-counter {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  z-index: 100;
+  text-transform: uppercase;
+  color: var(--pink);
+}
+
+.indicator-container {
+  position: absolute;
+  bottom: 1px;
+  left: 1px;
+  padding: 35px;
+  z-index: 10000;
+  width: 5px;
+  height: 5px;
+  border-radius: 999999px;
+}
+.indicator-container svg {
+  position: absolute;
+  bottom: 1%;
+  left: 1%;
+}
+.progress-circle {
+  transition: 0.2s ease-in-out;
+}
+
+.hidden-div {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 40%;
+  height: 100%;
+  background-color: var(--beige);
+  overflow-y: auto;
+  z-index: 10000000000000;
+  transition: transform 1s cubic-bezier(1, -0.1, 0.79, 0.58);
+  transform: translateX(100%);
+  box-shadow: 0px 4px 44px 10px rgba(0, 0, 0, 0.05);
+  padding: 50px;
+}
+
+
+
+.close-btn {
+  border: none;
+  background: none;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: right;
+}
+
+@keyframes fadeInHr {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOutHr {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.fade-in-hr {
+  animation: fadeInHr 1s 0.9s ease-in-out forwards;
+  transform: none !important;
+}
+
+.fade-out-hr {
+  animation: fadeOutHr 1s 1s ease-in-out forwards;
+  transform: none !important;
+}
+
+.about hr {
+  height: 1px;
+  border: none;
+  background-color: #000;
+}
+
+.noBorder div {
+  border-top: 0px solid black !important;
+}
+
+.about h2 {
+  font-size: clamp(40px, 3vw, 80px);
+  margin: 3vh 0;
+  text-transform: uppercase;
+  color: var(--black);
+}
+.about h4 {
+  text-align: right;
+  font-size: 12px;
+}
+
+.about p {
+  text-transform: uppercase;
+  opacity: 0.5;
+  font-size: 12px;
+  margin: 8px 0;
+  height: 14px !important;
+}
+
+.about h3 {
+  text-transform: uppercase;
+  margin: 30px 0;
+}
+
+.about a {
+  font-size: 12px;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.about a:hover p {
+  color: var(--pink);
+  transition: 0.5s;
+}
+.about a p {
+  transition: 0.5s;
+  color: #00000051;
+  margin: 0 0 1vh 0;
+}
+
+.about #close-btn p{
+  color: var(--black)!important;
+}
+
+#main-content {
+  visibility: hidden;
+  opacity: 0;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* .opacityhome {
+  opacity: 0;
+  animation: opacity 2s ease 3.5s forwards;
+} */
+.opacityhome {
+  opacity: 0;
+}
+
+/* Animation pour faire apparaître les éléments */
+.opacityhome.page-loaded {
+  animation: fadeInContent 1s ease forwards;
+}
+
+@keyframes fadeInContent {
+  to {
+    opacity: 1;
+  }
+}
+
+#preloader-percentage {
+  font-size: clamp(30px, 5vw, 60px);
+  color: var(--pink);
+  bottom: 0px !important;
+}
+
+#preloader-images {
+  z-index: 10000000000000;
+}
+
+.content-about p,
+.content-about h2,
+.content-about h3,
+.content-about h4 {
+  opacity: 0;
+  overflow: hidden;
+  height: max-content;
+  transform: translateY(100px);
+}
+
+.content-about-remove p,
+.content-about-remove h2,
+.content-about-remove h3,
+.content-about-remove h4 {
+  opacity: 1;
+  overflow: hidden;
+  height: max-content;
+  transform: translateY(0px);
+}
+
+@keyframes contentAbout {
+  from {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+@keyframes contentAboutRemove {
+  from {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+}
+
+.content-about p,
+.content-about h2,
+.content-about h3,
+.content-about h4 {
+  animation: contentAbout 2s 0.5s forwards;
+}
+
+.content-about-remove p,
+.content-about-remove h2,
+.content-about-remove h3,
+.content-about-remove h4 {
+  animation: contentAboutRemove 1s 0.4s forwards;
+}
+
+.overflow-content {
+  overflow: hidden;
+  border: none !important;
+  position: relative;
+  height: max-content;
+}
+.slider-duo {
+  display: flex;
+  width: 65%;
+  margin: 50px;
+  justify-content: space-between;
+}
+
+.main-slider .swiper-wrapper {
+  display: block;
+}
+.main-slider .swiper-slide {
+  width: 30vw;
+}
+.main-slider .swiper-slide img {
+  width: 30vw;
+  height: auto !important;
+  max-width: none;
+  max-height: none;
+}
+
+.thumb-slider .swiper-wrapper {
+  display: block;
+}
+.thumb-slider {
+  pointer-events: none;
+}
+.thumb-slider .swiper-slide {
+  height: 150px;
+  opacity: 0.5;
+}
+.thumb-slider .swiper-slide img {
+  width: 100px;
+}
+
+.thumb-slider .swiper-slide-thumb-active {
+  opacity: 1;
+}
+.thumb-slider .swiper-slide {
+  opacity: 0.2;
+  transition: opacity 1s;
+}
+
+.thumb-slider .swiper-slide-active {
+  opacity: 1 !important;
+}
+
+
+
+.thumb-slider .swiper-slide {
+  animation: slideUp 1s ease forwards;
+  opacity: 0;
+}
+
+.main-slider .swiper-slide {
+  animation: slideUp 1.5s ease forwards;
+  opacity: 0;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.opacity {
+  opacity: 0;
+  animation: opacity 0.3s ease 0.3s forwards;
+}
+.contact {
+  margin: 40px;
+}
+.contact-title {
+  font-size: clamp(30px, 11vw, 110px);
+}
+
+.contact-flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.contact form {
+  width: 60%;
+}
+
+.contact input[type="text"],
+.contact input[type="email"],
+.contact textarea {
+  background-color: rgba(255, 255, 255, 0);
+  width: 100%;
+  min-height: 20px;
+  margin: 30px 0;
+  border: unset;
+  border-bottom: 1px solid black;
+}
+.contact input[type="submit"] {
+  background-color: unset;
+  border: 0px;
+  color: var(--pink);
+  text-align: right;
+  cursor: pointer;
+}
+
+#imageContainer {
+  position: relative;
+  display: inline-block;
+}
+
+#brightnessEffect {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.2);
+  mix-blend-mode: lighten;
+  display: none;
+}
+
+.project-header-spacer{
+  height: 50vh;
+}
+
+.inner-project {
+    margin: 100px 10px;
+  }
+
+.credit-hr {
+  margin: 10px 0;
+}
+
+.description{
+  margin-bottom:100px;
+}
+
+.description p {
+  width: 35%;
+ text-transform: none;
+}
+
+.dynamicText span{
+ 
+      font-weight: 100;
+      font-size: 24px;
+      text-transform: none;
+}
+
+.credit {
+  width: 40%;
+}
+
+.flex-inner {
+  display: flex;
+  justify-content: space-between;
+  text-transform: uppercase;
+}
+
+h2{
+  margin: 0;
+}
+
+
+
+
+
+.web-link {
+  color: var(--pink);
+  text-transform: uppercase;
+}
+
+.sticker {
+  transition: opacity 0.5s ease-out;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+#compteur {
+  cursor: pointer;
+  min-width: 10px;
+  text-align: center;
+}
+
+.tooltip {
+  position: fixed;
+  padding: 8px;
+  color: var(--pink);
+  border-radius: 50vw;
+  text-transform: uppercase;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 1s;
+}
+.toolin {
+  overflow: hidden;
+}
+
+.title-project {
+  z-index: 100000000000000000000000000000;
+  color: black;  
+  font-size: 14px;
+  font-weight: 500;
+}
+
+
+.parallax-container {
+  overflow: hidden;
+  height: max-content;
+  position: relative;
+  margin: 10px 0;
+}
+
+.parallax-image {
+  position: absolute;
+  width: 50vw !important;
+}
+
+.noParallax {
+  margin: 50px auto;
+}
+
+@keyframes slideInText {
+  from {
+    transform: translateY(120%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.slideIn {
+  overflow: hidden;
+  animation-fill-mode: forwards;
+  opacity: 0;
+  transform: translateY(-120%);
+}
+
+@keyframes expandRight {
+  from {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+hr {
+  opacity: 1;
+  
+}
+.expandRight {
+  animation-fill-mode: forwards;
+  opacity: 0;
+  transform: translateX(-120%);
+}
+
+.containerSlide {
+  overflow: hidden;
+  height: max-content;
+}
+
+
+
+.fade-inDynamic {
+  transition: opacity 1s ease;
+}
+
+form {
+  opacity: 0;
+  animation: opacity 1s 0.5s forwards ease-in;
+}
+
+.w-100 {
+  width: 70vw !important;
+}
+
+.w-50 {
+  width: 40vw !important;
+}
+
+.w-33 {
+  width: 30vw !important;
+}
+
+.img-flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+footer {
+  text-transform: uppercase;
+  margin: 10vh 40px 40px 40px;
+}
+footer a {
+  color: rgba(0, 0, 0, 0.5);
+  transition: 0.6s ease-in-out;
+  font-size: 12px !important;
+}
+
+footer a:hover {
+  color: var(--pink);
+  transition: 0.3s ease-in-out;
+}
+.flex-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+footer .containerSlide {
+  margin: 15px 0;
+}
+
+footer .legal a,
+footer .legal p {
+  font-size: 10px !important;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+#section-cachee {
+  position: fixed;
+  bottom: -100vh;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  transition: 0.3s ease-in;
+  text-align: center;
+  z-index: 1000 !important;
+}
+
+#section-cachee img {
+  width: 100%;
+  z-index: 100;
+  text-align: center;
+}
+
+.next {
+  position: absolute;
+  top: calc(80% - 15vw);
+  left: calc(85% - 7.5vw);
+  z-index: 1000000000000000000;
+  opacity: 1;
+  color: var(--beige);
+}
+
+.next p {
+  font-size: 3vw !important;
+}
+
+#overlay-rose {
+  pointer-events: none;
+  transition: opacity 0.5s ease-in-out infinite;
+}
+
+.background-clone {
+  z-index: 100000;
+}
+
+video {
+  width: 70vw;
+  display: inline-block;
+  text-align: right;
+  margin-right: auto!important;
+}
+
+.noOverlay #overlay-rose-1,
+.noOverlay #overlay-rose-2 {
+  pointer-events: none;
+  display: none;
+}
+
+#overlay-rose-1 {
+  pointer-events: none;
+}
+
+#overlay-rose-2 {
+  display: none;
+  pointer-events: none;
+}
+
+.relative {
+  position: relative;
+  width: 25%;
+  max-width: 40vh;
+  z-index: 100;
+  text-align: center;
+  margin: auto;
+}
+
+.relative:hover .degrade-next {
+  opacity: 1 !important;
+  transition: 0.8s;
+}
+.relative:hover .info-projetsuivant {
+  opacity: 1 !important;
+  transition: 0.8s;
+  transition-delay: 0.1s;
+}
+
+.info-projetsuivant {
+  color: white;
+  transition: 0.3s;
+  pointer-events: none;
+  position: absolute;
+  opacity: 1;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  text-align: left;
+  display: flex;
+  width: 90%;
+  align-items: end;
+  justify-content: space-between;
+  padding: 20px 20px;
+}
+
+/* Animation de slide pour chaque mot */
+.word-slide-in {
+  display: flex; /* Nécessaire pour transformer chaque mot */
+  transform: translateY(100%); /* Commence hors du cadre */
+  opacity: 0;
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; /* Douce transition */
+}
+
+/* Etat animé de chaque mot */
+.word-slide-in.animated {
+  transform: translateY(0%); /* Se déplace à sa position originale */
+  opacity: 1;
+}
+
+.info-projetsuivant h2 span{
+  font-size: 2vw;
+  margin: -10px;
+
+}
+
+.info-projetsuivant p {
+  font-size: 14px;
+  margin: 0;
+}
+
+.degrade-next {
+  width: 100%;
+  position: absolute;
+  transition: 0.8s;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  bottom: 3px;
+  background: rgb(255, 71, 126);
+  background: linear-gradient(
+    0deg,
+    rgba(255, 71, 126, 1) 0%,
+    rgba(255, 71, 126, 0) 100%
+  );
+}
+
+.relative-home {
+  position: relative;
+  z-index: 100;
+  text-align: center;
+  margin: auto;
+}
+
+.relative-home:hover .degrade-next-home {
+  opacity: 1 !important;
+  transition: 1s;
+}
+
+.degrade-next-home {
+  width: 100%;
+  position: absolute;
+  transition: 1s;
+  height: 100%;
+  opacity: 0;
+  bottom: 0px;
+  background: rgb(255, 71, 126);
+  background: linear-gradient(
+    0deg,
+    rgba(255, 71, 126, 1) 0%,
+    rgba(255, 71, 126, 0) 100%
+  );
+}
+
+#comingSoonContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.footer-home {
+  display: none;
+}
+
+#gallery-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 80%;
+  display: flex;
+  z-index: 199;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+#gallery-container img {
+  width: 15vh;
+  position: absolute;
+  transition: transform 0.5s ease;
+
+  transform: translateZ(0);
+}
+
+.hidden {
+  display: none !important;
+}
+
+#lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  opacity: .8!important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+#lightbox img {
+  max-width: 80%;
+  max-height: 80%;
+}
+
+.in-lightbox {
+  pointer-events: none;
+}
+
+.closeimg {
+  position: fixed;
+  bottom: 5vh;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px !important;
+  color: var(--beige) !important;
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  outline: inherit;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.buttons-container {
+  position: fixed;
+  bottom: 3vh;
+  bottom: 5vh;
+  opacity: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: opacitybutton 2s ease-in-out 2s forwards !important;
+}
+
+@keyframes opacitybutton {
+  0% {
+    opacity: 0;
+    pointer-events: none;
+  }
+  100% {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.buttons-container button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  text-transform: uppercase;
+  margin: 0 10px;
+
+  font-size: 14px;
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.imgFadeOut {
+  opacity: 0 !important;
+  transition: opacity 0.6s ease !important;
+  pointer-events: none;
+}
+
+.imgFadeIn {
+  animation: fadeInAnimation 1s ease-out forwards;
+}
+
+@keyframes fadeInAnimation {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+
+
+
+
+
+
+
+@media only screen and (min-width: 30px) and (max-width: 768px) {
+  .menu {
+    display: none !important;
+  }
+.project-header-spacer{
+  height: 32vh;
+}
+  .menu-btn {
+    display: block;
+  }
+
+  .mobile-menu {
+    display: block;
+  }
+
+  /* Le carré du menu prend le coin haut-droit : on libère la place en
+     masquant le toggle List/Slide sur mobile (il reste actif en JS,
+     simplement pas affiché ici pour ne pas se chevaucher). */
+  .flexgrid {
+    display: none !important;
+  }
+
+  /* Piste de vignettes (scrubber) des pages projet : retirée sur mobile,
+     les images du projet prennent alors toute la largeur (voir .w-100). */
+  .project-mini-nav {
+    display: none !important;
+  }
+
+  .sectionprojet .w-100 {
+    width: 100% !important;
+  }
+
+  /* Home : toujours en mode liste sur mobile (forcé en JS), donc plus besoin
+     de la mini-nav (points de navigation) — et les vignettes projet passent
+     à 100% de large au lieu des 20vw du mode liste desktop. */
+  .mini-nav-container:not(.project-mini-nav) {
+    display: none !important;
+  }
+
+  .custom-gallery.is-vertical .gallery-item {
+    width: calc(100% - 20px) !important;
+  }
+
+  /* Modale "à propos" : les 3 colonnes passent en flex column, empilées,
+     avec un scroll interne si le contenu dépasse la hauteur d'écran. Les
+     carrés-cibles (.about-bullet-target) restent en DOM au même endroit
+     dans le flux, l'animation JS continue de les trouver dynamiquement. */
+  .about-content {
+    flex-direction: column;
+    width: calc(100% - 40px);
+    /* Sans ça, .about-content (item flex de #about-magic-overlay, resté en
+       row) refuse de rétrécir sous la largeur min-content de son contenu
+       et déborde horizontalement malgré le "width" ci-dessus. */
+    min-width: 0;
+    max-height: 80vh;
+    overflow-y: auto;
+    overflow-x: hidden; /* jamais de scrollbar horizontale sur ce bloc */
+    gap: 32px;
+  }
+
+  .about-col-bio,
+  .about-col-clients,
+  .about-col-links {
+    flex: none;
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* Ces deux blocs restaient côte à côte même en colonne : sur les écrans
+     vraiment étroits, ça débordait horizontalement (barre de scroll). On
+     les empile aussi. */
+  .about-heading-split,
+  .about-links-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  /* .menu (donc le lien "Fermer" du header) est masqué sur mobile : seul
+     moyen de refermer la modale sans repasser par le menu burger. */
+  .about-close-btn {
+    display: block;
+  }
+
+  .imgClonedResize{
+    left: 10px!important;
+    right: 10px!important;
+    top: 100px!important;
+    width: calc(100% - 20px)!important; 
+    height: 32vh!important;
+  }
+
+
+  /* Le header mobile reprend exactement le positionnement du desktop
+     (position: fixed, top: 0, padding: 10px — voir la règle "header" de
+     base) : plus de marge/top spécifique au mobile. */
+
+  /* Le header garde son width:100% même quand .menu/.flexgrid sont masqués :
+     sans ça, sa zone "vide" (tout le côté droit) intercepte les clics
+     destinés au carré du menu posé par-dessus, malgré son z-index énorme.
+     On désactive les clics sur le header et on les réautorise juste sur le
+     logo, seul élément réellement visible ici. */
+  header {
+    pointer-events: none;
+  }
+  header a {
+    pointer-events: auto;
+  }
+
+  #overlay {
+    display: none;
+  }
+
+  .swiper-wrapper {
+    display: initial;
+  }
+  .infinite-container {
+    margin-top: 20vh;
+  }
+  body {
+    overflow-x: auto !important;
+  }
+
+  /* Les vignettes sources sont en 1000x1500 (ratio 2:3, portrait) : on le
+     fige explicitement pour que la largeur 100% du mode liste mobile ne
+     déforme/écrase pas le ratio (l'ancien "max-height: 550px" rognait trop
+     haut sur les écrans larges et donnait un rendu quasi carré). */
+  .thumbContainer img,
+  .thumbContainer video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    margin: auto;
+  }
+
+  .hidden-div {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .contact-flex .about {
+    display: none;
+  }
+
+  .swiper-slide {
+    display: block;
+    align-items: center;
+    width: auto;
+    width: 100% !important;
+    margin: 0px;
+    margin-top: 10vh;
+  }
+
+  .degrade-next-home {
+    display: none;
+  }
+
+  .titre-projet {
+    font-size: 14px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    margin-left: 5px;
+  }
+
+  .hp-projet {
+    left: 10px;
+    right: 10px;
+    width: calc(100% - 20px); 
+    top: 100px;
+    height: 32vh;
+  }
+
+
+ 
+  .inner-project {
+        margin: 100px 10px;
+  }
+
+  .title-project {
+    margin-left: 10px;
+  }
+  .description p {
+    width: 100%;
+  }
+
+  .credit {
+    width: 100%;
+  }
+  footer {
+    text-transform: uppercase;
+    margin: 10vh 10px 10px 10px;
+  }
+
+  .flex-footer {
+    flex-wrap: wrap;
+  }
+  .flex-footer div {
+    width: 50%;
+  }
+
+  .legal {
+    display: block;
+  }
+
+  .w-33 {
+    width: 100% !important;
+  }
+
+
+  
+
+  .contact {
+    margin: 10px;
+    margin-top: 10vh;
+  }
+
+  .contact-flex {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .contact form {
+    width: 100%;
+    margin: 5vh 0;
+  }
+  #clock {
+    display: none;
+  }
+  .contact input[type="submit"] {
+    margin: 0;
+    padding: 0;
+  }
+
+  .buttons-container {
+    width: 100%;
+    left: 55%;
+  }
+
+  #gallery-container img {
+    width: 20%;
+  }
+
+  .inner-project p {
+    font-size: 11px;
+  }
+  .inner-project h3 {
+    display: none;
+  }
+
+  .noParallax {
+    margin: 30px auto;
+  }
+
+  .parallax-container {
+    margin: 30px auto;
+  }
+
+  .w-50 {
+    width: 90vw !important;
+  }
+  .img-flex {
+    flex-wrap: wrap;
+  }
+
+  .description {
+    margin: 30px 0;
+    
+  }
+  .footer-home {
+    display: block;
+  }
+  .infinite-container {
+    position: unset;
+    width: auto;
+    height: max-content;
+    bottom: unset;
+    }
+}
+
+@media only screen and (min-width: 30px) and (max-width: 768px) and (hover: hover) and (pointer: fine) {
+  .swiper-wrapper {
+    display: flex;
+    /* height: calc(90vh - 85px); */
+    align-items: flex-end;
+  }
+  .swiper-slide {
+    display: flex;
+    align-items: flex-end;
+    width: auto;
+  }
+  .footer-home {
+    display: none;
+  }
+  .swiper-slide img {
+    max-width: 780px;
+    max-height: 655px;
+  }
+  .infinite-container {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    bottom: 0;
+    }
+}
