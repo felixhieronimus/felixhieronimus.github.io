@@ -1495,7 +1495,31 @@ function initPullToNextProject(container = document) {
     gsap.fromTo(nameEl, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", delay: 0.3 });
   }
 
-  // --- 3. ANIMATION AU SCROLL ---
+  // Flash de flou blanc puis navigation — partagé par le déclenchement au
+  // scroll (desktop) et au tap (mobile).
+  const goToNext = () => {
+    if (isNavigatingNext) return;
+    isNavigatingNext = true;
+    if (currentWheelHandler) {
+      window.removeEventListener('wheel', currentWheelHandler);
+      currentWheelHandler = null;
+    }
+    gsap.to(glassOverlay, { backgroundColor: "var(--beige, #ffffff)", backdropFilter: "blur(40px)", duration: 0.3 });
+    gsap.to(trigger, { opacity: 0, duration: 0.3, ease: "power2.in" });
+    setTimeout(() => barba.go(nextUrl), 200);
+  };
+
+  // Sur mobile, pas de molette : accumuler un geste de scroll pour remplir
+  // une jauge n'a pas de sens au tactile. Le bloc devient un simple bouton :
+  // un tap déclenche directement la navigation (la barre de progression est
+  // masquée en CSS, inutile sans mécanique de scroll à jauger).
+  if (window.matchMedia("(max-width: 768px)").matches) {
+    trigger.style.cursor = "pointer";
+    trigger.addEventListener('click', goToNext);
+    return;
+  }
+
+  // --- 3. ANIMATION AU SCROLL (desktop) ---
   currentWheelHandler = (e) => {
     if (isNavigatingNext) return;
 
@@ -1518,33 +1542,23 @@ function initPullToNextProject(container = document) {
         gsap.to(fill, { scaleX: 0, duration: 0.3 });
         gsap.to(glassOverlay, { backgroundColor: "rgba(255, 255, 255, 0)", backdropFilter: "blur(0px)", duration: 0.3 });
       }
-      return; 
+      return;
     }
 
     const progress = Math.min(scrollAccumulator / scrollTarget, 1);
-    
+
     // La jauge se remplit en fonction du scroll
     gsap.to(fill, { scaleX: progress, duration: 0.1, overwrite: true });
-    
+
     // Le verre s'opacifie et se floute
-    gsap.to(glassOverlay, { 
-      backgroundColor: `rgba(255, 255, 255, ${progress * 0.95})`, 
-      backdropFilter: `blur(${progress * 25}px)`, 
-      duration: 0.1, 
-      overwrite: true 
+    gsap.to(glassOverlay, {
+      backgroundColor: `rgba(255, 255, 255, ${progress * 0.95})`,
+      backdropFilter: `blur(${progress * 25}px)`,
+      duration: 0.1,
+      overwrite: true
     });
 
-    if (progress >= 0.99) {
-      isNavigatingNext = true;
-      window.removeEventListener('wheel', currentWheelHandler);
-      currentWheelHandler = null;
-      
-      // Fin de l'animation : flash de flou blanc juste avant de changer
-      gsap.to(glassOverlay, { backgroundColor: "var(--beige, #ffffff)", backdropFilter: "blur(40px)", duration: 0.3 });
-      gsap.to(trigger, { opacity: 0, duration: 0.3, ease: "power2.in" });
-      
-      setTimeout(() => barba.go(nextUrl), 200);
-    }
+    if (progress >= 0.99) goToNext();
   };
 
   window.addEventListener('wheel', currentWheelHandler, { passive: false });

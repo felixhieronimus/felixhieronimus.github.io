@@ -658,6 +658,25 @@ header .menu span {
   z-index: 1000000;
 }
 
+/* Carré blanc de fermeture : invisible tant que le panneau est fermé, il
+   apparaît par-dessus le carré noir agrandi (aria-expanded géré par le clic
+   dans initMenu()) pour indiquer clairement où taper pour refermer. */
+.menu-btn::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 10px;
+  height: 10px;
+  background: var(--beige);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.menu-btn[aria-expanded="true"]::after {
+  opacity: 1;
+}
+
 #scroll-progress {
   position: fixed;
   top: 10px;
@@ -1963,6 +1982,13 @@ video {
      moyen de refermer la modale sans repasser par le menu burger. */
   .about-close-btn {
     display: block;
+  }
+
+  /* "Projet suivant" devient un simple bouton tactile sur mobile (voir
+     initPullToNextProject) : la barre de progression n'a plus de sens sans
+     mécanique de scroll à jauger. */
+  #next-project-trigger .progress {
+    display: none;
   }
 
   .imgClonedResize{
