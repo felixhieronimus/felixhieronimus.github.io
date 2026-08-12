@@ -475,6 +475,10 @@ function initProjectMiniNav(container = document) {
     window.removeEventListener('scroll', window.miniNavScrollHandler);
     window.removeEventListener('resize', window.miniNavResizeHandler);
   }
+  if (window.miniNavResizeObserver) {
+    window.miniNavResizeObserver.disconnect();
+    window.miniNavResizeObserver = null;
+  }
 
   // Sur mobile, le scrubber est masqué en CSS et les images projet passent à
   // 100% de largeur (voir .project-mini-nav / .sectionprojet .w-100) : inutile
@@ -658,6 +662,20 @@ function initProjectMiniNav(container = document) {
     calculateMetrics();
     handleScrollEffects();
   }, 300);
+
+  // Les images ont "loading=lazy" et aucune largeur/hauteur réservée en HTML :
+  // tant qu'elles n'ont pas fini de charger, leur boîte fait ~0px de haut, ce
+  // qui fausse sectionHeight (calculée à partir des offsetTop/offsetHeight
+  // réels) et donnait un highlighter démesuré (jusqu'à faire la hauteur de
+  // plusieurs vignettes). Le ResizeObserver recalcule à chaque fois que la
+  // galerie change de hauteur, quel que soit le moment où chaque image finit
+  // de charger — plus fiable qu'un délai fixe.
+  const resizeObserver = new ResizeObserver(() => {
+    calculateMetrics();
+    handleScrollEffects();
+  });
+  resizeObserver.observe(sectionProjet);
+  window.miniNavResizeObserver = resizeObserver;
 }
 // ==============================================================================
 // 1. SMOOTH SCROLL (LENIS) — ACTIVÉ HORS HOME
