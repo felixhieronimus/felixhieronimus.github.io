@@ -1679,23 +1679,31 @@ function initMenu() {
   }
 }
 
-function autoplayVideoWhenVisible() {
-  const video = document.querySelector("video");
-  if (!video) return;
-
-  video.pause();
-  video.currentTime = 0;
+// container : scope explicite obligatoire côté Barba (nextContainer). Sans ça,
+// document.querySelector("video") allait chercher dans TOUT le document, y
+// compris l'ancien container pas encore retiré du DOM pendant la transition
+// "next project" — l'observer se posait alors sur la vidéo de la page qu'on
+// quitte au lieu de celle qu'on vient d'atteindre, d'où l'autoplay cassé.
+// querySelectorAll (pas juste le premier <video>) car certaines pages (Elma)
+// ont plusieurs vidéos dans leur galerie.
+function autoplayVideoWhenVisible(container = document) {
+  const videos = container.querySelectorAll("video");
+  if (!videos.length) return;
 
   if (window.videoObserver) window.videoObserver.disconnect();
 
   window.videoObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) video.play().catch(e => console.error("Auto-play error", e));
-      else video.pause();
+      if (entry.isIntersecting) entry.target.play().catch(e => console.error("Auto-play error", e));
+      else entry.target.pause();
     });
   }, { threshold: 0.5 });
 
-  window.videoObserver.observe(video);
+  videos.forEach(video => {
+    video.pause();
+    video.currentTime = 0;
+    window.videoObserver.observe(video);
+  });
 }
 
 
@@ -1957,7 +1965,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initSmoothScroll();
     updateClock();
     rollingText();
-    autoplayVideoWhenVisible();
+    autoplayVideoWhenVisible(nextContainer);
     toggleNoOverlayClass();
     initializtions();
 
