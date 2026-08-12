@@ -576,7 +576,9 @@ function initProjectMiniNav(container = document) {
     // pouvait déborder sur 2-3 vignettes selon le nombre d'images du projet
     // (et selon si sectionHeight avait fini de se stabiliser après le
     // chargement des images lazy).
-    const highlighterHeight = allMinis[0]?.offsetHeight || 30;
+    // +12px pour laisser un peu de respiration autour de la vignette plutôt
+    // qu'un cadre pile ajusté à ses bords.
+    const highlighterHeight = (allMinis[0]?.offsetHeight || 30) + 12;
     highlighter.style.height = `${highlighterHeight}px`;
     highlighter.style.width = "calc(5vw + 30px)";
   };
